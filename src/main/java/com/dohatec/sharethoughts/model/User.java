@@ -1,7 +1,7 @@
 package com.dohatec.sharethoughts.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,13 +20,13 @@ public class User {
     @Column(name = "phoneNo")
     private String phoneNo;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts;
+    @OneToMany(mappedBy = "apiUser", cascade = CascadeType.ALL)
+    private Set<Post> posts = new HashSet<>();
 
     public User() {
     }
 
-    public User(int userId, String username, String email, String phoneNo, List<Post> posts) {
+    public User(int userId, String username, String email, String phoneNo, Set<Post> posts) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -66,12 +66,15 @@ public class User {
         this.phoneNo = phoneNo;
     }
 
-    public List<Post> getPosts() {
+    public Set<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(Set<Post> posts) {
         this.posts = posts;
+        for(Post post: posts){
+            post.setApiUser(this);
+        }
     }
 
     @Override

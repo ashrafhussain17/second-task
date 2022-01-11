@@ -1,12 +1,12 @@
 package com.dohatec.sharethoughts.controller;
 
+import com.dohatec.sharethoughts.exception.PostNotFoundException;
 import com.dohatec.sharethoughts.model.Post;
-import com.dohatec.sharethoughts.repository.PostRepository;
 import com.dohatec.sharethoughts.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +18,28 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/all")
-    public List<Post> getAllPosts() {
-        return postService.findAllPosts();
+    public ResponseEntity<List<Post>> getAllPosts() {
+        return new ResponseEntity<>(postService.findAllPosts(), HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Post> createPost(@RequestBody Post post){
+        Post post1 = postService.createNewPost(post);
+        return  new ResponseEntity<>(post1, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getUserById(@PathVariable int id){
+        Post post = postService.findByUserWithId(id);
+        if(post == null){
+            throw new PostNotFoundException();
+        }
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deletePostsWithId(@PathVariable int id) {
+        postService.deletePostById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

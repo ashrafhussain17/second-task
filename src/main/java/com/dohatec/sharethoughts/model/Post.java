@@ -1,5 +1,7 @@
 package com.dohatec.sharethoughts.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,17 +14,18 @@ public class Post {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId")
-    private User user;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private User apiUser;
 
     public Post() {
     }
 
-    public Post(int postId, String description, User user) {
+    public Post(int postId, String description, User apiUser) {
         this.postId = postId;
         this.description = description;
-        this.user = user;
+        this.apiUser = apiUser;
     }
 
     public int getPostId() {
@@ -41,12 +44,12 @@ public class Post {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public User getApiUser() {
+        return apiUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setApiUser(User apiUser) {
+        this.apiUser = apiUser;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class Post {
         return "Post{" +
                 "postId=" + postId +
                 ", description='" + description + '\'' +
-                ", user=" + user +
+                ", apiUser=" + apiUser +
                 '}';
     }
 }
