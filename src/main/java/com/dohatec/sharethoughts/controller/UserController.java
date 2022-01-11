@@ -1,6 +1,7 @@
 package com.dohatec.sharethoughts.controller;
 
 import com.dohatec.sharethoughts.exception.UserNotFoundException;
+import com.dohatec.sharethoughts.model.Post;
 import com.dohatec.sharethoughts.model.User;
 import com.dohatec.sharethoughts.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

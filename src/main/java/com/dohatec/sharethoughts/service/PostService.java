@@ -32,4 +32,9 @@ public class PostService {
     public void deletePostById(int id) {
         postRepository.deleteByPostId(id);
     }
+
+    public List<Post> findAllPostsForASpecificUser(int userId) {
+       List<Post> posts = postRepository.fillAllThePostForAUser(userId);
+       return posts;
+    }
 }

@@ -1,6 +1,7 @@
 package com.dohatec.sharethoughts.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +13,11 @@ public class User {
     private int userId;
 
     @Column(name = "username")
+    @NotBlank
     private String username;
 
     @Column(name = "email")
+    @NotBlank
     private String email;
 
     @Column(name = "phoneNo")

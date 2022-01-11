@@ -1,5 +1,6 @@
 package com.dohatec.sharethoughts.service;
 
+import com.dohatec.sharethoughts.model.Post;
 import com.dohatec.sharethoughts.model.User;
 import com.dohatec.sharethoughts.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

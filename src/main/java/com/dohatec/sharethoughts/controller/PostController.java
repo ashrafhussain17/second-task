@@ -42,4 +42,13 @@ public class PostController {
         postService.deletePostById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<List<Post>> getPostsForUsers(@PathVariable int userId){
+        List<Post> posts = postService.findAllPostsForASpecificUser(userId);
+        if(posts.size() == 0){
+            throw new PostNotFoundException();
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 }
