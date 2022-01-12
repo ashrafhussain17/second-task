@@ -1,6 +1,5 @@
 package com.dohatec.sharethoughts.service;
 
-import com.dohatec.sharethoughts.model.Post;
 import com.dohatec.sharethoughts.model.User;
 import com.dohatec.sharethoughts.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,7 @@ public class UserService {
     }
 
     @Transactional
-    public User deleteUserById(int id) {
-       User deletedUser = userRepository.deleteByUserId(id);
-       return deletedUser;
+    public void deleteUserById(int id) {
+        userRepository.deleteByUserId(id);
     }
 }

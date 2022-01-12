@@ -4,6 +4,8 @@ import com.dohatec.sharethoughts.exception.UserNotFoundException;
 import com.dohatec.sharethoughts.model.Post;
 import com.dohatec.sharethoughts.model.User;
 import com.dohatec.sharethoughts.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
+        logger.info("getting all the users");
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
@@ -41,10 +46,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUsersWithId(@PathVariable int id) {
-        User deletedUsers = userService.deleteUserById(id);
-        if(deletedUsers == null){
-            throw new UserNotFoundException();
-        }
-        return new ResponseEntity<>(deletedUsers, HttpStatus.OK);
+        userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

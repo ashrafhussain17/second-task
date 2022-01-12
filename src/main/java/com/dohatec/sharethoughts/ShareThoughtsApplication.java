@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ShareThoughtsApplication {
 
     public static void main(String[] args) {
-//        Logger logger = LoggerFactory.getLogger(ShareThoughtsApplication.class);
-//        logger.info("starting the application");
+        Logger logger = LoggerFactory.getLogger(ShareThoughtsApplication.class);
+        logger.info("starting the application, hi from the main class");
         SpringApplication.run(ShareThoughtsApplication.class, args);
     }
 }
