@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
         User user1 = userService.createNewUser(user);
         return  new ResponseEntity<>(user1, HttpStatus.CREATED);
     }
@@ -39,8 +40,11 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteUsersWithId(@PathVariable int id) {
-        userService.deleteUserById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<User> deleteUsersWithId(@PathVariable int id) {
+        User deletedUsers = userService.deleteUserById(id);
+        if(deletedUsers == null){
+            throw new UserNotFoundException();
+        }
+        return new ResponseEntity<>(deletedUsers, HttpStatus.OK);
     }
 }

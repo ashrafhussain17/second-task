@@ -3,6 +3,7 @@ package com.dohatec.sharethoughts.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Post")
@@ -12,6 +13,7 @@ public class Post {
     private int postId;
 
     @Column(name = "description")
+    @NotBlank
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

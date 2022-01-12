@@ -30,7 +30,8 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUserById(int id) {
-        userRepository.deleteByUserId(id);
+    public User deleteUserById(int id) {
+       User deletedUser = userRepository.deleteByUserId(id);
+       return deletedUser;
     }
 }
