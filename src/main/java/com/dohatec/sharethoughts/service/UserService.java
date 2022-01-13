@@ -28,8 +28,11 @@ public class UserService {
         return newUser;
     }
 
-    @Transactional
     public void deleteUserById(int id) {
-        userRepository.deleteByUserId(id);
+        try {
+            userRepository.deleteByUserId(id);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

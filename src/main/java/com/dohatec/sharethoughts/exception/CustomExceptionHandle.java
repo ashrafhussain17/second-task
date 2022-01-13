@@ -1,5 +1,6 @@
 package com.dohatec.sharethoughts.exception;
 
+import com.dohatec.sharethoughts.model.Post;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,7 +30,7 @@ public class CustomExceptionHandle extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(PostNotCreated.class)
-    public ResponseEntity<Object> handlePostNotCreatedException() {
+    public ResponseEntity<Object> handlePostNotCreatedException(PostNotCreated exception) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setDateTime(LocalDateTime.now());
         exceptionResponse.setMessage("Post is not created successfully");

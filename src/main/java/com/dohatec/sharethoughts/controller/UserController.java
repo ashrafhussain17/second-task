@@ -31,12 +31,14 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user){
+        logger.info("Creating a new user");
         User user1 = userService.createNewUser(user);
         return  new ResponseEntity<>(user1, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id){
+        logger.info("Getting a user with their ID");
         User user = userService.findByUserWithId(id);
         if(user == null){
             throw new UserNotFoundException();
@@ -46,6 +48,10 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUsersWithId(@PathVariable int id) {
+        logger.info("Deleting a user based on the provided ID");
+        if(userService.findByUserWithId(id) == null){
+            throw new UserNotFoundException();
+        }
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

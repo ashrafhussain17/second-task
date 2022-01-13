@@ -13,10 +13,9 @@ public class Post {
     private int postId;
 
     @Column(name = "description")
-    @NotBlank
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "userId")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User apiUser;

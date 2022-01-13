@@ -3,6 +3,8 @@ package com.dohatec.sharethoughts.model;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,13 +21,15 @@ public class User {
 
     @Column(name = "email")
     @NotBlank
+    @NotEmpty
+    @NotNull
     @Email
     private String email;
 
     @Column(name = "phoneNo")
     private String phoneNo;
 
-    @OneToMany(mappedBy = "apiUser", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "apiUser", cascade = CascadeType.ALL)
     private Set<Post> posts = new HashSet<>();
 
     public User() {
