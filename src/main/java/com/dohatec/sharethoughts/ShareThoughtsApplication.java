@@ -11,6 +11,8 @@ public class ShareThoughtsApplication {
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(ShareThoughtsApplication.class);
         logger.info("starting the application, hi from the main class");
+        logger.trace("this log is for trace");
+        logger.warn("this log is for warning");
         SpringApplication.run(ShareThoughtsApplication.class, args);
     }
 }

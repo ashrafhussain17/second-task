@@ -21,6 +21,15 @@
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
 
+        <RollingFile name="traceLog" fileName="${sys:APP_LOG_ROOT}/trace.log"
+                     filePattern="${sys:APP_LOG_ROOT}/application-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
         <RollingFile name="infoLog" fileName="${sys:APP_LOG_ROOT}/infoLog.log"
                      filePattern="${sys:APP_LOG_ROOT}/application-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout pattern="${LOG_PATTERN}"/>
@@ -34,9 +43,13 @@
 
     <Loggers>
 
-        <Logger name="com.dohatec.sharethoughts" additivity="false" level="debug">
+        <Logger name="com.dohatec.sharethoughts" additivity="false" level="warn">
             <AppenderRef ref="applicationLog" />
             <AppenderRef ref="console"  />
+        </Logger>
+
+        <Logger name="com.dohatec.sharethoughts" additivity="false" level="trace">
+            <AppenderRef ref="traceLog" />
         </Logger>
 
         <Logger name="com.dohatec.sharethoughts" additivity="false" level="info">
