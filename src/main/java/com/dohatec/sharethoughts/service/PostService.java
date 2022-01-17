@@ -28,7 +28,6 @@ public class PostService {
     @Transactional
     public Post createNewPost(Post post) {
         Post newPost = postRepository.save(post);
-        System.out.println(post.getApiUser().getUserId());
         User user1 = userRepository.findByUserId(post.getApiUser().getUserId());
         if(user1.getUserId() == 8){
             throw new RuntimeException("Rollback should be done for user 8");

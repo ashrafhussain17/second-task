@@ -16,7 +16,16 @@
                      filePattern="${sys:APP_LOG_ROOT}/application-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="19500KB" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="infoLog" fileName="${sys:APP_LOG_ROOT}/infoLog.log"
+                     filePattern="${sys:APP_LOG_ROOT}/application-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
@@ -28,6 +37,10 @@
         <Logger name="com.dohatec.sharethoughts" additivity="false" level="debug">
             <AppenderRef ref="applicationLog" />
             <AppenderRef ref="console"  />
+        </Logger>
+
+        <Logger name="com.dohatec.sharethoughts" additivity="false" level="info">
+            <AppenderRef ref="infoLog" />
         </Logger>
 
         <Root level="INFO">
