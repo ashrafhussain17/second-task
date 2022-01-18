@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +25,7 @@ public class UserService {
     }
 
     public  User createNewUser(User user) {
+//        user.setCreatedAt(LocalDateTime.now());
         User newUser = userRepository.save(new User(user.getUserId(), user.getUsername(), user.getEmail(), user.getPhoneNo(), user.getPosts()));
         return newUser;
     }

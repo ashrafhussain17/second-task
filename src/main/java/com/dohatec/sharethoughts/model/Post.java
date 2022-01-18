@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,11 +28,14 @@ public class Post {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User apiUser;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "post_tag",
-            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "postId"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "tagId")
-    )
-    private Set<Post> tags = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY
+//            cascade = {
+//                    CascadeType.PERSIST,
+//                    CascadeType.MERGE
+//            }
+            )
+    @JoinTable(name = "post_tags",
+            joinColumns = { @JoinColumn(name = "post_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+    private Set<Tags> tags = new HashSet<>();
 }

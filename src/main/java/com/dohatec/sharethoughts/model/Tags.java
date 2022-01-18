@@ -29,7 +29,11 @@ public class Tags {
     private String tagName;
 
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                    CascadeType.PERSIST,
+//                    CascadeType.MERGE
+//            },
+            mappedBy = "tags")
     private Set<Post> posts = new HashSet<>();
-
 }

@@ -4,8 +4,10 @@ import com.dohatec.sharethoughts.exception.PostNotCreated;
 import com.dohatec.sharethoughts.exception.PostNotFoundException;
 import com.dohatec.sharethoughts.exception.UserNotFoundException;
 import com.dohatec.sharethoughts.model.Post;
+import com.dohatec.sharethoughts.model.PostDTO;
 import com.dohatec.sharethoughts.service.PostService;
 import com.dohatec.sharethoughts.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/posts")
@@ -26,6 +29,9 @@ public class PostController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     Logger logger = LoggerFactory.getLogger(PostController.class);
 
     @GetMapping("/all")
@@ -36,6 +42,12 @@ public class PostController {
             throw new PostNotFoundException();
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAll")
+    public List<PostDTO> getsPostsWithDTO() {
+        List<Post> posts = postService.findAllPosts();
+        return posts.stream().map(post -> modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
     }
 
     @PostMapping("/create")
