@@ -20,9 +20,7 @@ public class User {
     private String username;
 
     @Column(name = "email")
-    @NotBlank
     @NotEmpty
-    @NotNull
     @Email
     private String email;
 

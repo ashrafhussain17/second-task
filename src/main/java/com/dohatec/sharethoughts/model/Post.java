@@ -1,11 +1,20 @@
 package com.dohatec.sharethoughts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Post")
 public class Post {
     @Id
@@ -20,45 +29,11 @@ public class Post {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User apiUser;
 
-    public Post() {
-    }
-
-    public Post(int postId, String description, User apiUser) {
-        this.postId = postId;
-        this.description = description;
-        this.apiUser = apiUser;
-    }
-
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public User getApiUser() {
-        return apiUser;
-    }
-
-    public void setApiUser(User apiUser) {
-        this.apiUser = apiUser;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "postId=" + postId +
-                ", description='" + description + '\'' +
-                ", apiUser=" + apiUser +
-                '}';
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "post_tag",
+            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "postId"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "tagId")
+    )
+    private Set<Post> tags = new HashSet<>();
 }
