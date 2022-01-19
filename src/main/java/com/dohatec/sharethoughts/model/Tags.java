@@ -1,5 +1,6 @@
 package com.dohatec.sharethoughts.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "tags")
 public class Tags {
 
     @Id
@@ -28,12 +30,7 @@ public class Tags {
     @Column(name = "tagName")
     private String tagName;
 
-
-    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {
-//                    CascadeType.PERSIST,
-//                    CascadeType.MERGE
-//            },
-            mappedBy = "tags")
+    @ManyToMany(mappedBy = "postTags")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
 }

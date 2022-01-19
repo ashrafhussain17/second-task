@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TagsService {
@@ -19,5 +20,9 @@ public class TagsService {
 
     public Tags createNewTag(Tags tag) {
         return tagsRepository.save(tag);
+    }
+
+    public Tags findTagWithId(UUID tagId) {
+        return tagsRepository.findByTagId(tagId);
     }
 }

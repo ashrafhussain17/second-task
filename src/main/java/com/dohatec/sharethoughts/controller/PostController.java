@@ -5,7 +5,9 @@ import com.dohatec.sharethoughts.exception.PostNotFoundException;
 import com.dohatec.sharethoughts.exception.UserNotFoundException;
 import com.dohatec.sharethoughts.model.Post;
 import com.dohatec.sharethoughts.model.PostDTO;
+import com.dohatec.sharethoughts.model.Tags;
 import com.dohatec.sharethoughts.service.PostService;
+import com.dohatec.sharethoughts.service.TagsService;
 import com.dohatec.sharethoughts.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -28,6 +31,9 @@ public class PostController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TagsService tagsService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -82,5 +88,14 @@ public class PostController {
         }
         List<Post> posts = postService.findAllPostsForASpecificUser(userId);
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @PutMapping("/{postId}/tags/{tagId}")
+    public ResponseEntity<Post> addTagToPost(@PathVariable int postId, @PathVariable UUID tagId){
+        Post post = postService.findPostWithId(postId);
+        Tags tags = tagsService.findTagWithId(tagId);
+        post.addTag(tags);
+        postService.updateWithTags(post);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 }

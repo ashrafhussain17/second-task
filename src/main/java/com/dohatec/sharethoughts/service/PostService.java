@@ -25,14 +25,8 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    @Transactional
     public Post createNewPost(Post post) {
-        Post newPost = postRepository.save(post);
-        User user1 = userRepository.findByUserId(post.getApiUser().getUserId());
-        if(user1.getUserId() == 8){
-            throw new RuntimeException("Rollback should be done for user 8");
-        }
-        return  newPost;
+        return postRepository.save(post);
     }
 
     public Post findByUserWithId(int id) {
@@ -48,5 +42,13 @@ public class PostService {
     public List<Post> findAllPostsForASpecificUser(int userId) {
        List<Post> posts = postRepository.fillAllThePostForAUser(userId);
        return posts;
+    }
+
+    public Post findPostWithId(int postId) {
+        return postRepository.findByPostId(postId);
+    }
+
+    public Post updateWithTags(Post post) {
+        return postRepository.save(post);
     }
 }
