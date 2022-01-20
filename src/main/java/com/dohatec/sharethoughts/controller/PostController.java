@@ -41,19 +41,24 @@ public class PostController {
     Logger logger = LoggerFactory.getLogger(PostController.class);
 
     @GetMapping("/all")
-    public ResponseEntity<List<Post>> getAllPosts() {
+    public ResponseEntity<List<PostDTO>> getAllPosts() {
         logger.info("Fetching all the posts");
         List<Post> posts = postService.findAllPosts();
         if (posts.size() <= 0){
             throw new PostNotFoundException();
         }
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+        List<PostDTO> postDTOS =  posts.stream().map(post -> modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(postDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/getAll")
-    public List<PostDTO> getsPostsWithDTO() {
+    public ResponseEntity<List<Post>> getsPostsWithDTO() {
+        logger.info("Fetching all the posts without DTO");
         List<Post> posts = postService.findAllPosts();
-        return posts.stream().map(post -> modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
+        if (posts.size() <= 0){
+            throw new PostNotFoundException();
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @PostMapping("/create")

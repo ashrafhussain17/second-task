@@ -3,7 +3,9 @@ package com.dohatec.sharethoughts.controller;
 import com.dohatec.sharethoughts.exception.UserNotFoundException;
 import com.dohatec.sharethoughts.model.Post;
 import com.dohatec.sharethoughts.model.User;
+import com.dohatec.sharethoughts.model.UserDTO;
 import com.dohatec.sharethoughts.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/all")
@@ -37,13 +42,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
         logger.info("Getting a user with their ID");
         User user = userService.findByUserWithId(id);
         if(user == null){
             throw new UserNotFoundException();
         }
-        return new ResponseEntity<>(user, HttpStatus.FOUND);
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        return new ResponseEntity<>(userDTO, HttpStatus.FOUND);
     }
 
     @DeleteMapping("/{id}")
