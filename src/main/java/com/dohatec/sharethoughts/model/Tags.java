@@ -30,7 +30,8 @@ public class Tags {
     @Column(name = "tagName")
     private String tagName;
 
-    @ManyToMany(mappedBy = "postTags")
+    @ManyToMany(targetEntity = Post.class, mappedBy = "postTags",
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JsonIgnore
     private Set<Post> posts = new HashSet<>();
 }

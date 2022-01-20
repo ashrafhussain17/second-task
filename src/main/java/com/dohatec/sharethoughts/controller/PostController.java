@@ -5,6 +5,7 @@ import com.dohatec.sharethoughts.exception.PostNotFoundException;
 import com.dohatec.sharethoughts.exception.UserNotFoundException;
 import com.dohatec.sharethoughts.model.Post;
 import com.dohatec.sharethoughts.model.PostDTO;
+import com.dohatec.sharethoughts.model.TagDTO;
 import com.dohatec.sharethoughts.model.Tags;
 import com.dohatec.sharethoughts.service.PostService;
 import com.dohatec.sharethoughts.service.TagsService;
@@ -40,7 +41,7 @@ public class PostController {
 
     Logger logger = LoggerFactory.getLogger(PostController.class);
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all")
     public ResponseEntity<List<PostDTO>> getAllPosts() {
         logger.info("Fetching all the posts");
         List<Post> posts = postService.findAllPosts();
@@ -99,6 +100,7 @@ public class PostController {
     public ResponseEntity<Post> addTagToPost(@PathVariable int postId, @PathVariable UUID tagId){
         Post post = postService.findPostWithId(postId);
         Tags tags = tagsService.findTagWithId(tagId);
+        // TagDTO tagDTO = modelMapper.map(tags, TagDTO.class);
         post.addTag(tags);
         postService.updateWithTags(post);
         return new ResponseEntity<>(post, HttpStatus.OK);

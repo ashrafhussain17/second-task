@@ -30,6 +30,7 @@ public class UserService {
         return newUser;
     }
 
+    @Transactional
     public void deleteUserById(int id) {
         try {
             userRepository.deleteByUserId(id);

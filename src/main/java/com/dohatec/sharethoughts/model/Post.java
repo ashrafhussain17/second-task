@@ -30,13 +30,13 @@ public class Post {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User apiUser;
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(targetEntity = Tags.class,
             cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH
+            CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH
     })
     @JoinTable(name = "post_tags",
-            joinColumns = { @JoinColumn(name = "post_id") },
-            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+            joinColumns = { @JoinColumn(name = "post_id", referencedColumnName = "postId")},
+            inverseJoinColumns = { @JoinColumn(name = "tag_id", referencedColumnName = "tagId") })
     private Set<Tags> postTags = new HashSet<>();
 
     public void addTag(Tags tag) {

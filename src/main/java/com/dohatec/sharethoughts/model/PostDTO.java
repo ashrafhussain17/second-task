@@ -9,5 +9,5 @@ import java.util.Set;
 public class PostDTO {
 
     private String description;
-    private Set<Post> tags = new HashSet<>();
+    private Set<Tags> tags = new HashSet<>();
 }
