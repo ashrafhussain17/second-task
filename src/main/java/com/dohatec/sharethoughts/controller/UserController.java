@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 public class UserController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class UserController {
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all")
     public ResponseEntity<List<User>> getAllUsers() {
         logger.info("getting all the users");
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);

@@ -26,7 +26,7 @@ public class UserService {
 
     public  User createNewUser(User user) {
 //        user.setCreatedAt(LocalDateTime.now());
-        User newUser = userRepository.save(new User(user.getUserId(), user.getUsername(), user.getEmail(), user.getPhoneNo()));
+        User newUser = userRepository.save(new User(user.getUserId(), user.getUserName(), user.getEmail(), user.getPhoneNo(), user.getPassword(), user.isActive(), user.getRoles()));
         return newUser;
     }
 

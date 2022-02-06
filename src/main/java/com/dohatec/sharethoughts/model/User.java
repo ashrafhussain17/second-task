@@ -21,7 +21,7 @@ public class User {
 
     @Column(name = "username")
     @NotBlank
-    private String username;
+    private String userName;
 
     @Column(name = "email")
     @NotEmpty
@@ -30,4 +30,13 @@ public class User {
 
     @Column(name = "phoneNo")
     private String phoneNo;
+
+    @Column(name="password")
+    private String password;
+
+    @Column(name="active")
+    private boolean active;
+
+    @Column(name="roles")
+    private String roles;
 }

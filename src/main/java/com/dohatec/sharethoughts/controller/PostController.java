@@ -100,7 +100,6 @@ public class PostController {
     public ResponseEntity<Post> addTagToPost(@PathVariable int postId, @PathVariable UUID tagId){
         Post post = postService.findPostWithId(postId);
         Tags tags = tagsService.findTagWithId(tagId);
-        // TagDTO tagDTO = modelMapper.map(tags, TagDTO.class);
         post.addTag(tags);
         postService.updateWithTags(post);
         return new ResponseEntity<>(post, HttpStatus.OK);
